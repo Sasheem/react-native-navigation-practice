@@ -1,11 +1,31 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import {
   createSwitchNavigator,
   createStackNavigator,
   createDrawerNavigator,
-  createBottomTabNavigator
+  createBottomTabNavigator,
 } from 'react-navigation';
+
+/*
+  createSwitchNavigator - Only show one screen/stack at one time
+  1. Loading Screen
+  2. Authentication StackNavigator
+    - Auth Loading Screen
+    - Sign In Screen
+    - Sign Up Screen
+  3. AppDrawerNavigator
+    - App StackNavigator (to give a common header to tabs)
+      - Home Tab
+      - Settings Tab
+*/
+
 import AuthLoadingScreen from './screens/AuthLoadingScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
 import SignInScreen from './screens/SignInScreen';
@@ -28,9 +48,26 @@ const AppTabNavigator = createBottomTabNavigator({
   }
 });
 
+/*
+  The advantage of placing a stack navigator between the
+  drawer navigator and the tab navigator is you can use
+  a common header at the top
+
+  READ doc on navigationOptions
+*/
 const AppStackNavigator = createStackNavigator({
   AppTabNavigator:{
-    screen:  AppTabNavigator
+    screen:  AppTabNavigator,
+    navigationOptions: ({ navigation }) => ({
+      title: 'My App',
+      headerLeft: (
+        <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+          <View style={{ paddingHorizontal: 10 }}>
+            <Ionicons name='md-menu' size={24} />
+          </View>
+        </TouchableOpacity>
+      )
+    })
   }
 });
 
