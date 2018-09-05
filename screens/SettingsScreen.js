@@ -2,14 +2,22 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  StyleSheet
+  StyleSheet,
+  Button,
+  AsyncStorage
 } from 'react-native';
 
 class SettingsScreen extends Component {
+
+  signOut = async() => {
+    AsyncStorage.clear();
+    this.props.navigation.navigate('AuthLoading');
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text>SettingsScreen</Text>
+        <Button title='Sign Out' onPress={this.signOut} />
       </View>
     );
   }

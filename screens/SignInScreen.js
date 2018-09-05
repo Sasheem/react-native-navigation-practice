@@ -11,7 +11,7 @@ class SignInScreen extends Component {
 
   signIn = async() => {
     await AsyncStorage.setItem('userToken', 'sasheem');
-    this.props.navigation.navigate('App');
+    this.props.navigation.navigate('AuthLoading');
   }
 
   render() {
